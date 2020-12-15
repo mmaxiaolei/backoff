@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-type backoff interface {
+type Backoff interface {
 	Next() time.Duration
 	Reset()
 }
