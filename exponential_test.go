@@ -6,7 +6,7 @@ import (
 )
 
 func TestExponential_Next(t *testing.T) {
-	e := NewExponentialBackoff(WithJitterFactor(0))
+	e := NewExponentialBackoff(WithFactor(2), WithJitterFactor(0))
 	equal(t, 500*time.Millisecond, e.Next())
 	equal(t, 1000*time.Millisecond, e.Next())
 }
