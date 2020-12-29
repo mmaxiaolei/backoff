@@ -8,4 +8,5 @@ go backoff lib,support jitter,avoid 'thundering herd' effect
 ## usage
 
 b := backoff.NewExponentialBackoff()
+
 d := b.Next()
