@@ -1,14 +1,24 @@
 package backoff
 
 import (
+	"fmt"
 	"testing"
 	"time"
 )
 
 func TestExponential_Next(t *testing.T) {
-	e := NewExponentialBackoff(WithFactor(2), WithJitterFactor(0))
-	equal(t, 500*time.Millisecond, e.Next())
-	equal(t, 1000*time.Millisecond, e.Next())
+	e := NewExponentialBackoff(
+		WithMinInterval(10*time.Millisecond),
+		WithFactor(2),
+		WithJitterFactor(0))
+	equal(t, 10*time.Millisecond, e.Next())
+	equal(t, 20*time.Millisecond, e.Next())
+	equal(t, 40*time.Millisecond, e.Next())
+	equal(t, 80*time.Millisecond, e.Next())
+	equal(t, 160*time.Millisecond, e.Next())
+	equal(t, 320*time.Millisecond, e.Next())
+	equal(t, 640*time.Millisecond, e.Next())
+	equal(t, 1280*time.Millisecond, e.Next())
 }
 
 func TestExponential_NextWithJitter(t *testing.T) {
@@ -19,6 +29,7 @@ func TestExponential_NextWithJitter(t *testing.T) {
 }
 
 func equal(t *testing.T, except time.Duration, actual time.Duration) {
+	fmt.Printf("%dms\n", actual/time.Millisecond)
 	if except != actual {
 		t.Fatalf("except: %dms,actual: %dms", except/time.Millisecond, actual/time.Millisecond)
 	}
