@@ -22,9 +22,12 @@ func TestExponential_Next(t *testing.T) {
 }
 
 func TestExponential_NextWithJitter(t *testing.T) {
-	e := NewExponentialBackoff(WithJitterFactor(0.5), WithFactor(2))
-	for i := 0; i < 20; i++ {
-		println(e.Next() / time.Millisecond)
+	e := NewExponentialBackoff(
+		WithMinInterval(10*time.Millisecond),
+		WithJitterFactor(0.5),
+		WithFactor(2))
+	for i := 0; i < 8; i++ {
+		fmt.Printf("%dms\n", e.Next()/time.Millisecond)
 	}
 }
 
