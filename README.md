@@ -7,6 +7,7 @@ go backoff lib,support jitter,avoid 'thundering herd' effect
 
 ## usage
 
+```go
 b := backoff.NewExponentialBackoff()
-
 d := b.Next()
+```
